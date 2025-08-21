@@ -1,43 +1,705 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Fitness Hub - Elevate Your Fitness</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary-color: #38e07b;
+            --secondary-color: #f0f2f4;
+            --background-color: #f9f9f9;
+            --text-primary: #111418;
+            --text-secondary: #637488;
+            --accent-color: #e0e7ff;
+        }
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            scroll-behavior: smooth;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); /* shadow-md */
+            padding: 1.5rem; /* p-6 */
+        }
+        .button_primary {
+                background-color: var(--primary-color);
+                color: white;
+                font-weight: bold;
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                border-radius: 9999px;
+                transition-property: background-color;
+                transition-duration: 300ms;
+            }
+            .button_primary:hover {
+                background-color: #16a34a; /* Tailwind's green-600 */
+        }
+        .button_secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-primary);
+            font-weight: bold;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            border-radius: 9999px;
+            transition-property: background-color;
+            transition-duration: 300ms;
+        }
+        .button_secondary:hover {
+            background-color: #e5e7eb; /* Tailwind's gray-200 */
+        }
+        .typography_h1 {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 900;    /* font-black */
+            color: var(--text-primary); /* text-[var(--text-primary)] */
+            letter-spacing: -0.025em; /* tracking-tighter */
+        }
+        .typography_h2 {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: bold;    /* font-bold */
+            color: var(--text-primary); /* text-[var(--text-primary)] */
+            letter-spacing: -0.015em; /* tracking-tight */
+        }
+        .typography_body {
+            font-size: 1rem; /* text-base */
+            color: var(--text-secondary); /* text-[var(--text-secondary)] */
+            line-height: 1.625; /* leading-relaxed */
+        }
+        .active-section {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="relative flex size-full min-h-screen flex-col overflow-x-hidden">
+        <!-- Header -->
+        <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 bg-[var(--background-color)] px-10 py-4 shadow-sm">
+            <div class="flex items-center gap-3 text-[var(--text-primary)]">
+                <svg class="size-8 text-[var(--primary-color)]" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+                    <path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+                </svg>
+                <h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">Fitness Hub</h2>
+            </div>
+            <nav class="hidden items-center gap-8 md:flex">
+                <a class="nav-link text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#home">Home</a>
+                <a class="nav-link text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#about">About</a>
+                <a class="nav-link text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#classes">Classes</a>
+                <a class="nav-link text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#membership">Membership</a>
+                <a class="nav-link text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#facilities">Facilities</a>
+                <a class="nav-link text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#contact">Contact</a>
+            </nav>
+            <button class="button_primary hidden md:flex">
+                <span class="truncate">Join Now</span>
+            </button>
+            <button id="mobile-menu-button" class="md:hidden">
+                <svg class="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6h16M4 12h16m-7 6h7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
+            </button>
+        </header>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 p-6 md:hidden">
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex items-center gap-3 text-[var(--text-primary)]">
+                    <svg class="size-8 text-[var(--primary-color)]" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+                        <path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+                    </svg>
+                    <h2 class="text-xl font-bold">Fitness Hub</h2>
+                </div>
+                <button id="close-menu" class="text-[var(--text-primary)]">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </button>
+            </div>
+            <nav class="flex flex-col gap-6">
+                <a class="nav-link text-lg font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#home">Home</a>
+                <a class="nav-link text-lg font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#about">About</a>
+                <a class="nav-link text-lg font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#classes">Classes</a>
+                <a class="nav-link text-lg font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#membership">Membership</a>
+                <a class="nav-link text-lg font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#facilities">Facilities</a>
+                <a class="nav-link text-lg font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="#contact">Contact</a>
+            </nav>
+            <button class="button_primary w-full mt-8">
+                <span class="truncate">Join Now</span>
+            </button>
+        </div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+        <!-- Main Content -->
+        <main class="flex flex-1 flex-col">
+            <!-- Home/Hero Section -->
+            <section id="home" class="relative flex min-h-[60vh] items-center justify-center bg-cover bg-center py-20 text-white" style='background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDqB_Gk_tiK2GKMsAttwJ7pnFEBcWlQuH2hMwMWCi8sEgjKTxyKiBVBFi8O6CWNpeDMOKDIR1WNd9CveGZfBo8kEZ0jHQI0JWYLk05vFiTTzQwPWN8sJUXoW29nM8SFX8D5wANbFzha2mHzAOrsMiNcZvq-HuIMqdaiTuYyCJR25XY4ACB4K4nIPPljz9qBMARXw6ImCxMTqNM4jwQVIjOXNy3eW3y4WYc15YYvoNlHcKKaIsta_r3FpMUsql4TO1J_WwvymazVTyoZ");'>
+                <div class="container mx-auto px-4 text-center">
+                   <h1 class="typography_h1 mb-4 text-5xl text-white md:text-6xl" style="color: white !important;">
+                    Elevate Your Fitness Journey
+                  </h1>
+                    <p class="typography_body mx-auto mb-8 max-w-2xl text-lg text-gray-200">
+                        Discover a community dedicated to your health and well-being. Our state-of-the-art
+                        facility, expert trainers, and diverse classes are designed to help you achieve
+                        your fitness goals.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button class="button_primary">Membership Inquiries</button>
+                        <button class="button_secondary">Free Trial</button>
+                    </div>
+                </div>
+            </section>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+            <!-- Features Section -->
+            <section class="py-20">
+                <div class="container mx-auto px-4">
+                    <div class="mb-12 text-center">
+                        <h2 class="typography_h2 mb-2">Our Features</h2>
+                        <p class="typography_body mx-auto max-w-2xl">
+                            We offer a wide range of services to cater to all fitness levels and interests.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        <div class="card text-center">
+                            <div class="mx-auto mb-4 h-48 w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhS_RzR8AImv3GWj9mnGJx9B_Asgp9jRxEHXxmzuOKc1MPZN_s3hOvt3C22X884coA6pjDexkuq6Igop5ZfBp3T0DXeXdIMxh7QcJoGTtzluftG7wWRtSYswFPMtz_jemairYMv9X9dob-PYdMBxbyC9-FQ6B35Bi_AlumBEa7i_Zr1pYJsFKgVALJHzOkEY0wuTcDZhu5QN6g88som4lKTW0CliePSoh_MzYnxj9t0k1CkicQtGGSwcNgtAqs2Mffk1Zl0n6NzIAH");'></div>
+                            <h3 class="mb-2 text-xl font-bold">State-of-the-Art Equipment</h3>
+                            <p class="typography_body">
+                                Our gym is equipped with the latest fitness technology to ensure you have the
+                                best workout experience.
+                            </p>
+                        </div>
+                        <div class="card text-center">
+                            <div class="mx-auto mb-4 h-48 w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAxXpYah7HRgjeosn1s-bVz9EXsnSAnObUaqqObW21QuIIkKU1kErLF6niYz52RKa52S-Epm8cLF1zfSljwBPsgfYBvVMLycFVNJEP1yyM2DCJJMZDa2szixCj2uF4O2CIk_m2LxkFQUyYnRNa8qmVYFkJxeNXkrWn-MXSnGmnGfIKADZ3UqZYN7NADcirKL1wLTq0vVEekOu4Bln-Ymc1oipV5CZDdU4lMlIVplicFffxaU1xFsvnUOSyj5Cc7i4BZCXsjg9jJIJpt");'></div>
+                            <h3 class="mb-2 text-xl font-bold">Diverse Class Offerings</h3>
+                            <p class="typography_body">
+                                From high-intensity interval training to yoga, we have a class for everyone.
+                            </p>
+                        </div>
+                        <div class="card text-center">
+                            <div class="mx-auto mb-4 h-48 w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgG9EUKjkBp6ijiLg0RKuMpQajJlJ6uqk9gdFSqkoTZoBNV4TVWK1OUOdqsoU2TBRMeqg4aWo3kVsCiHGVwKIh-NZJlahqHWO_pFpPmxNk3Oje5rJZO8X5yZ3sWurbsUBYvDgqWtYU9jgTnvPuqZWM56uAavj2UXAdewaZcXKZW8Z18UJGe66eBfdwA7ZNJNX7Od3HWtZoosQnz90o6rNPyv1tSqeWAzjkNWKu1nihJatVtEIBXtBqSXjDNNqBJ0wcAzBCnrlESYBt");'></div>
+                            <h3 class="mb-2 text-xl font-bold">Expert Personal Training</h3>
+                            <p class="typography_body">
+                                Our certified trainers provide personalized guidance to help you reach your
+                                goals efficiently.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="py-20 bg-white">
+                <div class="container mx-auto px-4 text-center">
+                    <h1 class="typography_h1 max-w-3xl mx-auto">Our Commitment to Your Fitness Journey</h1>
+                    <p class="typography_body max-w-2xl mx-auto mt-6">Discover the heart and soul behind Fitness Hub, where we're more than just a gym – we're a community dedicated to your well-being.</p>
+                </div>
+                
+                <div class="container mx-auto px-4 mt-16">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                        <div class="card text-center">
+                            <h3 class="text-2xl font-bold text-[var(--text-primary)] mb-4">Our Mission</h3>
+                            <p class="typography_body">To empower individuals to achieve their fitness goals through personalized training, innovative programs, and a supportive community. We foster a positive, inclusive environment for all.</p>
+                        </div>
+                        <div class="card text-center">
+                            <h3 class="text-2xl font-bold text-[var(--text-primary)] mb-4">Our Values</h3>
+                            <p class="typography_body">We are committed to excellence, integrity, respect, and continuous improvement. We provide exceptional service and maintain the highest standards of professionalism.</p>
+                        </div>
+                        <div class="card text-center">
+                            <h3 class="text-2xl font-bold text-[var(--text-primary)] mb-4">Our History</h3>
+                            <p class="typography_body">Founded in 2010 by Sarah Johnson, we've grown from a small studio to a leading fitness center, known for expert trainers and state-of-the-art facilities.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container mx-auto px-4 mt-20">
+                    <div class="text-center">
+                        <h2 class="typography_h2 !mt-0">Meet Our Expert Team</h2>
+                        <p class="typography_body max-w-2xl mx-auto mt-4">Our certified trainers and friendly staff are here to guide and support you every step of the way.</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+                        <div class="text-center group">
+                            <div class="relative w-48 h-48 mx-auto rounded-full overflow-hidden shadow-lg transform group-hover:scale-105 transition-transform duration-300">
+                                <img alt="Emily Carter" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEE_L2bgivawY5Lt_4gjWkHFCEriXkA_n33rysmTZzafNPitE5LOuG2PbHAdzIrOl57C_ITwCrziDHGffT_nJtxHQc1pAoeF8Wh9vNrvqM-n16cx1KC6ZZxDN_ufn49FDe_QIKRfSNVzc8usW8HazrBynSCDIJ2OgI17l0y3URcOi1_CYsM_iPwRHP5Vaocjjt19FZT_QFRAyXaJGjR4nmm5X9BQFNDytRD9Pk-MUHO7ENz_TSAa81KKZ8WDU1DTRvLGaPrNz_3VKT"/>
+                            </div>
+                            <h4 class="text-xl font-bold text-[var(--text-primary)] mt-6">Emily Carter</h4>
+                            <p class="text-[var(--text-secondary)]">Certified Personal Trainer</p>
+                        </div>
+                        <div class="text-center group">
+                            <div class="relative w-48 h-48 mx-auto rounded-full overflow-hidden shadow-lg transform group-hover:scale-105 transition-transform duration-300">
+                                <img alt="David Lee" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBKqsCaat5UovxoFuvyYWGQnehbbQl4RHQYE-sv_1luMGVsv1wnX9tRfZbnmANcai8mYAd1xsRKuOAsSSR3y2QfbxOLvg1uYSOMYczlTefiO4NRVUki-431Z4CBiPrICCDLrCTlXeRc88npxy4jsipXzlGqsCpusijj3fdFNsEfkJBH7ig9jMZ1q8z4j7cR--2G_Er1rdp6_OK_T25aggddv7PAEO2eQou9iACN2clMjJm33dlAVMrGMRu27GwgGvzPwmyBucYNhb_"/>
+                            </div>
+                            <h4 class="text-xl font-bold text-[var(--text-primary)] mt-6">David Lee</h4>
+                            <p class="text-[var(--text-secondary)]">Strength & Conditioning Coach</p>
+                        </div>
+                        <div class="text-center group">
+                            <div class="relative w-48 h-48 mx-auto rounded-full overflow-hidden shadow-lg transform group-hover:scale-105 transition-transform duration-300">
+                                <img alt="Olivia Brown" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVAdRUymUm9KgfM5UWojQ1OA3Dtj1aVgdFN_sCRrAqMBCJtIHVIuqB75PxSgYbAn7ja9ouwHz6vTMSTRcjJIIz_uq-LOmNSQ70OeqW5p2CSEwTuQ1g8-3edXQ61mf-4VXb6bjuZ3JTXNeev4JCuXgdvTjDGlqxSwvkxgydLTUwRWM7OadOD_DZvbDsHU2bh74E2VOvVepZPOhD_6Z-3maM91Gq-GCmgoB-U5WQl_G7UpyrzzmKsAdTZYmtrgJihbwp-y45X1pu5Sh3"/>
+                            </div>
+                            <h4 class="text-xl font-bold text-[var(--text-primary)] mt-6">Olivia Brown</h4>
+                            <p class="text-[var(--text-secondary)]">Yoga Instructor</p>
+                        </div>
+                        <div class="text-center group">
+                            <div class="relative w-48 h-48 mx-auto rounded-full overflow-hidden shadow-lg transform group-hover:scale-105 transition-transform duration-300">
+                                <img alt="Ethan Clark" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnfD7RGPG8BL7hKGjOd1xGcvPSMNkN5p-UcgJDEhkqABObtxsfpTwVjnWDRgWmvydjQ9uwinZ83nNzhjXe8fmAyWXPphrNh8oKVrzLclm8-oE9PYx0RGdXwfM8QmHNLsXpr7v9tCGRNapv581CoVA1LSzIo1HyhhNGdBwcgUJe3wUmHpTPZivm4mAK9gaj8FbaRZ8YJ-huOYsL8G-2-x3ZBoFka9HlgyqcOnC6UwTj38xDIniG6vXmADit6aqyQJs8tKg9KgzkrrKr"/>
+                            </div>
+                            <h4 class="text-xl font-bold text-[var(--text-primary)] mt-6">Ethan Clark</h4>
+                            <p class="text-[var(--text-secondary)]">Nutrition Specialist</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Classes Section -->
+            <section id="classes" class="py-20 bg-[var(--background-color)]">
+                <div class="container mx-auto px-4">
+                    <h1 class="typography_h1 mb-12 text-center">Classes & Personal Training</h1>
+                    
+                    <div class="mb-16" id="class-schedule">
+                        <h2 class="typography_h2 mb-6">Class Schedule</h2>
+                        <div class="card">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr class="border-b border-gray-200">
+                                            <th class="px-6 py-4 text-sm font-semibold text-[var(--text-primary)]">Time</th>
+                                            <th class="px-6 py-4 text-sm font-semibold text-[var(--text-primary)]">Class</th>
+                                            <th class="px-6 py-4 text-sm font-semibold text-[var(--text-primary)]">Instructor</th>
+                                            <th class="px-6 py-4 text-sm font-semibold text-[var(--text-primary)]">Duration</th>
+                                            <th class="px-6 py-4 text-sm font-semibold text-[var(--text-primary)] text-center">Level</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">6:00 AM</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--text-primary)]">Morning Yoga</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">Sarah</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">60 min</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-center"><span class="button_secondary text-xs">Beginner</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">7:30 AM</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--text-primary)]">Strength Training</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">Mark</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">45 min</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-center"><span class="button_secondary text-xs">Intermediate</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">9:00 AM</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--text-primary)]">Pilates</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">Emily</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">60 min</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-center"><span class="button_secondary text-xs">All Levels</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">5:30 PM</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--text-primary)]">Spin Class</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">David</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">45 min</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-center"><span class="button_secondary text-xs">Advanced</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">7:00 PM</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--text-primary)]">Zumba</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">Maria</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">60 min</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-center"><span class="button_secondary text-xs">All Levels</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-16" id="class-descriptions">
+                        <h2 class="typography_h2 mb-6">Class Descriptions</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="card">
+                                <h3 class="font-bold text-lg mb-2">Morning Yoga</h3>
+                                <p class="typography_body">Gentle yoga to start your day with flexibility and mindfulness.</p>
+                            </div>
+                            <div class="card">
+                                <h3 class="font-bold text-lg mb-2">Strength Training</h3>
+                                <p class="typography_body">High-intensity workout focusing on building strength and endurance.</p>
+                            </div>
+                            <div class="card">
+                                <h3 class="font-bold text-lg mb-2">Pilates</h3>
+                                <p class="typography_body">Core-strengthening exercises to improve posture and flexibility.</p>
+                            </div>
+                            <div class="card">
+                                <h3 class="font-bold text-lg mb-2">Spin Class</h3>
+                                <p class="typography_body">Cardio workout on stationary bikes with varying resistance.</p>
+                            </div>
+                            <div class="card">
+                                <h3 class="font-bold text-lg mb-2">Zumba</h3>
+                                <p class="typography_body">Dance-based fitness class with Latin-inspired music.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="personal-training">
+                        <h2 class="typography_h2 mb-6">Personal Training</h2>
+                        <p class="typography_body mb-8 max-w-3xl mx-auto text-center">
+                            Achieve your fitness goals with personalized training sessions tailored to your needs. Our certified trainers provide guidance, motivation, and support to help you succeed.
+                        </p>
+                        <h3 class="text-2xl font-semibold text-center mb-10">Meet Our Trainers</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                            <div class="text-center">
+                                <div class="w-48 h-48 mx-auto bg-center bg-no-repeat aspect-square bg-cover rounded-full mb-4" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDxGeMVFNKGIahk7Ued1dLjClts-FAjqrEuiUUesAcKm4OWAwU-QA7st0lRWJhfXUJzSedDFSZAwa8SEYe-zGq2CMgXi8X5gpiffb29KtzDHXIPiB6Y8HPO1xSHE13s9XbePU0qdqzX05IYl4tbMZK7czp68MFxsWf5-W_XQ9Pu238m2N2LEGFsc0O_KKk5SchAzcoDlWLoEp0QooLJ4aO7UsHXTa5O34F2xehl7qtn70v_xnHAIVIeB3594G9tnPMWLAIiFdIatw9G");'></div>
+                                <h4 class="text-lg font-bold text-[var(--text-primary)]">Alex</h4>
+                                <p class="text-sm text-[var(--text-secondary)]">Specialty: Weightlifting</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-48 h-48 mx-auto bg-center bg-no-repeat aspect-square bg-cover rounded-full mb-4" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAepnPQjXJ8-bNZS4CoL8xWF1dPb_IPZbXXzqePBvuAGlWAMtpoUFtQdJ228hEQ1ymQR_sWPyXCJWsVmVinApsFzlPvCDifYpyguPdmCS3-HaZ-yE1Pvf6tYw7gNYVFsNEyYn8jevl2ORuqsZgUTtXyoZlkGlZQAs2I5vrd7qQjJZzkxVH6hbjZw5pBTXM1tPSqfayBaM6HOxTOpvUuZfvaiwRKvQ4emmhg7KEG4hNVgOOV0vGrDBxKuIDUnWGDm3K7MXrzcBpjzJ1f");'></div>
+                                <h4 class="text-lg font-bold text-[var(--text-primary)]">Jessica</h4>
+                                <p class="text-sm text-[var(--text-secondary)]">Specialty: Yoga & Pilates</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-48 h-48 mx-auto bg-center bg-no-repeat aspect-square bg-cover rounded-full mb-4" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGhHuzyekJUNEiMMFoteKrAKmMczryn8uU6axOTRIpIZ1OoRORRjZOZxQ-wpRf-kprbeKJUWMq2BmxHzgFXVWtCwwVgbEDIp45WfHs6SIuuLMgr5gXW-SRq0OSnbfp2LyrzxnMkgZtgW4NPT07UzY5XBmDxdF29AeRz2Bjd9bp-H7etqFBrAGvapi9x_f9QEO348yb6DcsvsHuB6omll7w-RmxIm1GJbLXPw-UP_lx9pZSJnqKIfyj--fuwtLRLu_dPsudeCizaqY2");'></div>
+                                <h4 class="text-lg font-bold text-[var(--text-primary)]">Michael</h4>
+                                <p class="text-sm text-[var(--text-secondary)]">Specialty: Cardio & HIIT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Membership Section -->
+            <section id="membership" class="py-20 bg-white">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h1 class="text-5xl font-black tracking-tighter mb-4">Membership Options</h1>
+                        <p class="text-lg text-[var(--text-secondary)]">Find the perfect plan to achieve your fitness goals.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="card flex flex-col">
+                            <div class="flex-grow">
+                                <h3 class="text-2xl font-bold mb-2">Basic</h3>
+                                <p class="flex items-baseline gap-1 mb-6">
+                                    <span class="text-5xl font-black tracking-tighter">$29</span>
+                                    <span class="text-[var(--text-secondary)] font-semibold">/month</span>
+                                </p>
+                                <ul class="space-y-3 text-[var(--text-secondary)]">
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>Access to gym floor</li>
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>Group fitness classes</li>
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>Locker room access</li>
+                                </ul>
+                            </div>
+                            <button class="button_secondary mt-8 w-full py-3 font-bold">Select Plan</button>
+                        </div>
+                        <div class="card flex flex-col ring-2 ring-[var(--primary-color)] relative">
+                            <p class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[var(--primary-color)] text-white text-xs font-bold px-3 py-1 rounded-full">BEST VALUE</p>
+                            <div class="flex-grow">
+                                <h3 class="text-2xl font-bold mb-2">Premium</h3>
+                                <p class="flex items-baseline gap-1 mb-6">
+                                    <span class="text-5xl font-black tracking-tighter">$49</span>
+                                    <span class="text-[var(--text-secondary)] font-semibold">/month</span>
+                                </p>
+                                <ul class="space-y-3 text-[var(--text-secondary)]">
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>All Basic features</li>
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/ssvg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>Personal training session (1/month)</li>
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>Towel service</li>
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>Guest pass (1/month)</li>
+                                </ul>
+                            </div>
+                            <button class="button_primary mt-8 w-full py-3 font-bold">Select Plan</button>
+                        </div>
+                        <div class="card flex flex-col">
+                            <div class="flex-grow">
+                                <h3 class="text-2xl font-bold mb-2">Elite</h3>
+                                <p class="flex items-baseline gap-1 mb-6">
+                                    <span class="text-5xl font-black tracking-tighter">$79</span>
+                                    <span class="text-[var(--text-secondary)] font-semibold">/month</span>
+                                </p>
+                                <ul class="space-y-3 text-[var(--text-secondary)]">
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>All Premium features</li>
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>Unlimited personal training</li>
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>Exclusive member events</li>
+                                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>Priority class booking</li>
+                                </ul>
+                            </div>
+                            <button class="button_secondary mt-8 w-full py-3 font-bold">Select Plan</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-20">
+                        <h2 class="text-4xl font-bold tracking-tight text-center mb-12">Special Offers</h2>
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden md:flex items-center">
+                            <div class="md:w-1/2 p-8">
+                                <h3 class="text-2xl font-bold mb-2">New Year, New You!</h3>
+                                <p class="text-[var(--text-secondary)] mb-6">Sign up for any membership before January 31st and get your first month free.</p>
+                                <button class="button_secondary font-bold">Learn More</button>
+                            </div>
+                            <div class="md:w-1/2 h-64 md:h-auto bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCYG5qQa39cGsQ9-bH_Bj8OIE5Ey-OODAldgK62_WPTPtNQyVYk3UNgvqmUkAWkgQZknmHRZgybGquUCoyp5kN9Qg2AvxJcAzlE7_j2dF23cVYHy3Fp4MEXiNhpplahsypf7Df-rXE46AVcG9QOmjThFP7Cv67tnZulfR47r6NvhVLDuZP3a1ZLyDCS0BA96Zov56h2agG7E4ChqqbeEGMJrwSbQ39kChSrGAjNUo6m5JehszpA6BhRzSU92tyahnOAl8O8KTCcIOXN");'></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-20 max-w-3xl mx-auto">
+                        <h2 class="text-4xl font-bold tracking-tight text-center mb-12">Frequently Asked Questions</h2>
+                        <div class="space-y-4">
+                            <details class="bg-white p-6 rounded-xl shadow-lg group">
+                                <summary class="flex cursor-pointer items-center justify-between font-bold">What's included in the Basic membership?
+                                    <svg class="w-5 h-5 text-[var(--text-secondary)] group-open:rotate-180 transition-transform" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                                </summary>
+                                <p class="text-[var(--text-secondary)] mt-4">The Basic membership gives you access to the gym floor, all group fitness classes, and our locker room facilities.</p>
+                            </details>
+                            <details class="bg-white p-6 rounded-xl shadow-lg group">
+                                <summary class="flex cursor-pointer items-center justify-between font-bold">Can I upgrade or downgrade my membership?
+                                    <svg class="w-5 h-5 text-[var(--text-secondary)] group-open:rotate-180 transition-transform" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                                </summary>
+                                <p class="text-[var(--text-secondary)] mt-4">Yes, you can upgrade or downgrade your membership at any time. Just speak to a member of our team at the front desk.</p>
+                            </details>
+                            <details class="bg-white p-6 rounded-xl shadow-lg group">
+                                <summary class="flex cursor-pointer items-center justify-between font-bold">Is there a cancellation fee?
+                                    <svg class="w-5 h-5 text-[var(--text-secondary)] group-open:rotate-180 transition-transform" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                                </summary>
+                                <p class="text-[var(--text-secondary)] mt-4">We offer flexible memberships. There is no cancellation fee, we just require 30 days notice.</p>
+                            </details>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-20">
+                        <button class="button_primary px-10 py-4 text-lg font-bold">Start Your Journey Today</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Facilities Section -->
+            <section id="facilities" class="py-16 lg:py-24 bg-[var(--background-color)]">
+                <div class="container mx-auto px-6 lg:px-10">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl lg:text-4xl font-bold tracking-tight">Our Facilities</h2>
+                        <p class="mt-4 text-lg text-[var(--text-secondary)]">Explore our state-of-the-art equipment and amenities.</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="group flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                            <div class="relative h-64">
+                                <div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoRNWWRLYbTiSsMxeRbagfwH_GfTRP9F7-WQhqHX8S_PmK9l1yfgMGt3gZuiEZMiAM1s5AJbgwPpL96wyKFDShwslddhJw9vvPukUr0zerASPBMrwoo4HqemwheHT50YelKQ20yY7wrGCEw28PJeWDrto0t1d21TfH2xl66g5BcJW9Ztc7Ki45AhEBpNbFsdHLSt1Wqr3E6b3gfLRlKFMmOkjhUVR6e_7I5-hDaAqSSB2_Cld5KYlmMD7PRXFFtUTlXhcKC19T2_mb");'></div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col">
+                                <h3 class="text-xl font-bold">Cardio Zone</h3>
+                                <p class="mt-2 text-[var(--text-secondary)] flex-1">State-of-the-art treadmills, ellipticals, and bikes.</p>
+                            </div>
+                        </div>
+                        <div class="group flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                            <div class="relative h-64">
+                                <div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsyhAIy_AhyXl3w5YubNI7-wn_-5oeLaSCNMYbJy1EHRFiCrTJfr4swPnmwwd5OFR83aJYjFrY59tOeBcGm-U9BwLwYNZ_pV2XOgd0zVDh-eIum_K6clv0ITDCkvL7y42PRnfCNM1KL4epHysnLLXTfezElJl7DGP8aTLSrmWrQLmxzIf_74fHj0YtJ4phfjC94s2K7XqhOtAFCXvMyIiuaJk8AM4dg7oghC8O5SY7YqRluiSmJT_a9TykTInNPULqbpty_3214CmO");'></div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col">
+                                <h3 class="text-xl font-bold">Strength Training</h3>
+                                <p class="mt-2 text-[var(--text-secondary)] flex-1">Comprehensive free weights and machine selection.</p>
+                            </div>
+                        </div>
+                        <div class="group flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                            <div class="relative h-64">
+                                <div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVkCyzs7yeFyi5ThYcDaNpPLijuRz9W_qLTRcss2UO6uogVYxbgLk1tvsQY6-DFGjRzHYXeEainWFg_53qFa_eUyNiQVClKbcfX_33Hh8RxDmKMJJTFo6-4CEpwenUwq9yM1YNWbwtTNeb7ib6TZaiQGqiwEBRirySzhVX_n81mLBXOvgQNV22kBJIhFv2CIrWDcWeBx2mD1GKhPEHKZDEstrE0CFQvfeZj8YLQut00s_iNpq52oFy498NrD9fduyXdHY8OV59Mmsq");'></div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col">
+                                <h3 class="text-xl font-bold">Group Fitness Studio</h3>
+                                <p class="mt-2 text-[var(--text-secondary)] flex-1">Spacious studio for yoga, pilates, and more.</p>
+                            </div>
+                        </div>
+                        <div class="group flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                            <div class="relative h-64">
+                                <div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhL9KfjfAi5iVLqJ-pncbcWaCi-Ri2vXWhM9aqxQAS2dmoG89WkgrtUQO9RrPT77q0iyDvcL_UkYiaG7N43piXdUgOYLeVC51mJZrpvp353zEIyuCdt66a-vufYHuC7DlkksWn0dsAbng6sv18wPOm7_OdfChr0yiiiHo7Z5fMGK8d94zU1bkqmXkBJA2haTUlSnJ5wl_kffcvePObtU5WmONDXavCJv2FMi1Ug-hIZYXnPXH_Azo5KruRhcVaBsoiw_l-zKC7Q3E9");'></div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col">
+                                <h3 class="text-xl font-bold">Recovery Lounge</h3>
+                                <p class="mt-2 text-[var(--text-secondary)] flex-1">Relax and rejuvenate with our massage chairs and sauna.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container mx-auto px-6 lg:px-10 mt-20">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl lg:text-4xl font-bold tracking-tight">Meet Our Members</h2>
+                        <p class="mt-4 text-lg text-[var(--text-secondary)]">Real stories from people just like you.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="mx-auto h-48 w-48 rounded-full overflow-hidden mb-6 shadow-lg">
+                                <img alt="Sarah" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJeJhrE5R0NE0Wk0GfJL9BsKiHoBVeg4KjuZEJ19GSUveMagqR20pF_C3r8yw99dDGagJlCI-EcbIUp0uPQdYF33RaF54w_gX-mq626BmadNho6pI-XE4-1CgZpyyEz6F8gY0NK3qm5XuavD9UngPQhGUexfehBpfpunYYru4ER8Na_1XE7t3-uPQP96nHvXmNRi1EANvvVewsdyx1_G1UIOVAtWBCVHPr9ZGktmEDvZ0ckdaEZoL_uSv9tNrymi5hBtCUTnThBdUo"/>
+                            </div>
+                            <h3 class="text-xl font-bold">Sarah's Transformation</h3>
+                            <p class="mt-2 text-[var(--text-secondary)]">"I lost 20 pounds and gained a level of confidence I never thought possible. The community here is incredible!"</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="mx-auto h-48 w-48 rounded-full overflow-hidden mb-6 shadow-lg">
+                                <img alt="Mark" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRvqIm5cBD_UMKkGlsOp5yMOw7-nDuHTOBWAp7NdduCYSpMSGUiMlZ1N5cgeXoJk9FOJCjJmwKDPUayRIlV-FpT88qNQhtaeWzo6af4v568lPNgUQ-XKIwxRacYL3uD6qCfnsghl-gdfod2JxPpulMMeEmSMmM49gaNVKWyaBCAfoasu8tlvk9RJaWoIh7nw9EPZHsSAQwU82sFkknJCuA4mjVoZtAT1abd4Lu5C1hEtJMaYXiOWO2R5r8uRu0uifh3g-inJxLw6hc"/>
+                            </div>
+                            <h3 class="text-xl font-bold">Mark's Endurance Journey</h3>
+                            <p class="mt-2 text-[var(--text-secondary)]">"The trainers helped me shave 30 minutes off my marathon time. Their expertise is second to none."</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="mx-auto h-48 w-48 rounded-full overflow-hidden mb-6 shadow-lg">
+                                <img alt="Community" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7rLeNnw9Ty8a2cj5B-aqpCd_ELBiS-i8UOwgTWaa-hO1UvMpC_FIkfuo5tQHwYwJl50CCWDyYjob1QGQGVXd-pB2hxfYut4rtGwOdmKZFv0dbKAVp48ePhexAt5M-gHwOZXeeEcNyA6fw9AYu_9mlMXgAa9OmCw9BnLcze0xsdC-1ilKLNm4-sSZvg9ySJwwk0mEBQi3xU2s6Vahf8Ow6QRrJtYbHKGliMmGwgZXe3CRb5R8DaU6JWGa0HjU5uyVDKGHKf8vSF8e-"/>
+                            </div>
+                            <h3 class="text-xl font-bold">Community Spirit</h3>
+                            <p class="mt-2 text-[var(--text-secondary)]">"The group classes are my favorite part. It feels like working out with a big, supportive family."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container mx-auto px-6 lg:px-10 mt-20 text-center">
+                    <h2 class="text-3xl lg:text-4xl font-bold tracking-tight">Join Our Community</h2>
+                    <p class="mt-4 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">Ready to start your fitness journey? We have a plan that's right for you.</p>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="button_primary">Explore Membership Options</button>
+                        <button class="button_secondary">Contact Us</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="py-20 bg-white">
+                <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 px-4 sm:px-10 md:px-20 lg:px-40">
+                    <div class="space-y-8">
+                        <div>
+                            <h1 class="typography_h1 mb-4">Get In Touch</h1>
+                            <p class="typography_body">
+                                We're here to help! Whether you have questions about our
+                                classes, trainers, or membership options, feel free to reach
+                                out. Our team is dedicated to providing you with the
+                                information you need to achieve your fitness goals.
+                            </p>
+                        </div>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-[var(--text-primary)] mb-2">
+                                    Our Location
+                                </h3>
+                                <p class="typography_body">
+                                    123 Fitness Lane, Suite 200, Cityville, State 12345
+                                </p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-[var(--text-primary)] mb-4">
+                                    Contact Information
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                                        </svg>
+                                        <p class="typography_body">(555) 123-4567</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                                        </svg>
+                                        <p class="typography_body">info@fitnesshub.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-[var(--text-primary)] mb-4">
+                                    Operating Hours
+                                </h3>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between typography_body border-b pb-2">
+                                        <span>Monday - Friday</span>
+                                        <span>6:00 AM - 10:00 PM</span>
+                                    </div>
+                                    <div class="flex justify-between typography_body border-b pb-2">
+                                        <span>Saturday</span>
+                                        <span>8:00 AM - 6:00 PM</span>
+                                    </div>
+                                    <div class="flex justify-between typography_body">
+                                        <span>Sunday</span>
+                                        <span>10:00 AM - 4:00 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div class="w-full h-96 bg-center bg-no-repeat aspect-video bg-cover rounded-xl shadow-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAG27lVRI_tCnLIiYFuwvzpZ6umw2QEd5XTUN7OueSYUVTtyWculaz9ZC6-BEqz-ucvBipXpcMe3BtDdfN0S4MDViM4ECdeKcb1YKfxOrgf_2PFDOq2Vp4h8Ju2tmG1KqOcpSuD7VQrH6HbcZWimwIL9jZoN3swx5wkHMB7kVpVm36ZvY2wQczPL8sfZfSa5r9igzg3Mn0ys2FZEbBnbnFP0S8Z3U-r3QjR47AEoh-MkuiZUpHZghlFsPDzFEdql81bYo4OcEQSPgcQ");'></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 py-8 text-white">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+                    <div class="flex flex-wrap justify-center gap-6 md:justify-start">
+                        <a class="text-sm text-gray-400 hover:text-white" href="#">Privacy Policy</a>
+                        <a class="text-sm text-gray-400 hover:text-white" href="#">Terms of Service</a>
+                        <a class="text-sm text-gray-400 hover:text-white" href="#contact">Contact Us</a>
+                    </div>
+                    <p class="text-sm text-gray-400">© 2023 Fitness Hub. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Active navigation highlighting
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active-section');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active-section');
+                }
+            });
+        });
+    </script>
+</body>
 </html>
